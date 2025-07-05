@@ -2,7 +2,7 @@
 
 A Generative AI-powered web app that classifies open-ended hotel reviews into key categories such as *Cleanliness, **Service, **Location*, and more using few-shot prompting with OpenAI GPT-3.5.
 
-#ive Demo & Notebook
+#Live Demo & Notebook
 
 - [Live Web App](https://tourmaline-florentine-2b495a.netlify.app/)
 - [Colab Notebook](https://colab.research.google.com/drive/1dAhLCPLHOxzdMhuyIHff73d-TI2KoSL6?usp=sharing)
