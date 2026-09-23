@@ -3,9 +3,10 @@ import { Send, MessageSquare } from 'lucide-react';
 
 interface FeedbackFormProps {
   onSubmit: (feedback: string) => void;
+  isLoading?: boolean;
 }
 
-const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
+const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit, isLoading = false }) => {
   const [feedback, setFeedback] = useState('');
   const [customerName, setCustomerName] = useState('');
   const [roomNumber, setRoomNumber] = useState('');
@@ -68,17 +69,18 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmit }) => {
             onChange={(e) => setFeedback(e.target.value)}
             rows={5}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none"
-            placeholder="Enter customer feedback here..."
+            placeholder="Enter customer feedback here... (e.g. 'Wi-Fi didn't work and AC was leaking')"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg"
+          disabled={isLoading}
+          className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-6 rounded-lg font-medium hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
         >
           <Send className="w-5 h-5" />
-          <span>Classify Feedback</span>
+          <span>{isLoading ? 'Classifying Feedback...' : 'Classify Feedback'}</span>
         </button>
       </form>
     </div>

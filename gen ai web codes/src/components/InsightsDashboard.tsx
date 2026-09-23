@@ -1,7 +1,7 @@
 import React from 'react';
-import { BarChart, PieChart, TrendingUp, Users, Building, Settings, MessageCircle } from 'lucide-react';
+import { BarChart, TrendingUp, Users, Building, Settings, MessageCircle } from 'lucide-react';
 
-interface FeedbackData {
+export interface FeedbackData {
   id: string;
   feedback: string;
   category: string;
@@ -15,7 +15,7 @@ interface InsightsDashboardProps {
 
 const InsightsDashboard: React.FC<InsightsDashboardProps> = ({ feedbackData }) => {
   const getCategoryStats = () => {
-    const stats = {
+    const stats: Record<string, number> = {
       Service: 0,
       Facilities: 0,
       Administration: 0,
@@ -24,7 +24,9 @@ const InsightsDashboard: React.FC<InsightsDashboardProps> = ({ feedbackData }) =
 
     feedbackData.forEach(item => {
       if (stats.hasOwnProperty(item.category)) {
-        stats[item.category as keyof typeof stats]++;
+        stats[item.category]++;
+      } else {
+        stats.General = (stats.General || 0) + 1;
       }
     });
 
@@ -37,14 +39,14 @@ const InsightsDashboard: React.FC<InsightsDashboardProps> = ({ feedbackData }) =
   const getPercentage = (count: number) => total > 0 ? ((count / total) * 100).toFixed(1) : '0';
 
   const categoryData = [
-    { name: 'Service', count: stats.Service, color: 'bg-green-500', icon: Users },
-    { name: 'Facilities', count: stats.Facilities, color: 'bg-blue-500', icon: Building },
-    { name: 'Administration', count: stats.Administration, color: 'bg-purple-500', icon: Settings },
-    { name: 'General', count: stats.General, color: 'bg-gray-500', icon: MessageCircle }
+    { name: 'Service', count: stats.Service || 0, color: 'bg-green-500', barColor: 'bg-green-500', icon: Users },
+    { name: 'Facilities', count: stats.Facilities || 0, color: 'bg-blue-500', barColor: 'bg-blue-500', icon: Building },
+    { name: 'Administration', count: stats.Administration || 0, color: 'bg-purple-500', barColor: 'bg-purple-500', icon: Settings },
+    { name: 'General', count: stats.General || 0, color: 'bg-gray-500', barColor: 'bg-gray-500', icon: MessageCircle }
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
+    <div className="bg-white rounded-xl shadow-lg p-8 mb-8 border border-gray-100">
       <div className="flex items-center space-x-3 mb-6">
         <BarChart className="w-6 h-6 text-blue-600" />
         <h2 className="text-2xl font-bold text-gray-800">Feedback Insights</h2>
@@ -72,7 +74,7 @@ const InsightsDashboard: React.FC<InsightsDashboardProps> = ({ feedbackData }) =
 
       <div className="bg-gray-50 rounded-lg p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">Category Distribution</h3>
-        <div className="space-y-3">
+        <div className="space-y-4">
           {categoryData.map((category) => (
             <div key={category.name} className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -80,9 +82,9 @@ const InsightsDashboard: React.FC<InsightsDashboardProps> = ({ feedbackData }) =
                 <span className="font-medium text-gray-700">{category.name}</span>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="w-32 bg-gray-200 rounded-full h-2">
+                <div className="w-32 md:w-48 bg-gray-200 rounded-full h-2.5">
                   <div 
-                    className={`h-2 rounded-full transition-all duration-300 ${category.color}`}
+                    className={`h-2.5 rounded-full transition-all duration-500 ${category.barColor}`}
                     style={{ width: `${total > 0 ? (category.count / total) * 100 : 0}%` }}
                   ></div>
                 </div>

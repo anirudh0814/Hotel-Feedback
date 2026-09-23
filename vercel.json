@@ -1,0 +1,4 @@
+{
+  "buildCommand": "cd \"gen ai web codes\" && npm install && npm run build",
+  "outputDirectory": "gen ai web codes/dist"
+}

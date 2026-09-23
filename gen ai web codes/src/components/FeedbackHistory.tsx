@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
 import { History, Filter, Search, Users, Building, Settings, MessageCircle } from 'lucide-react';
-
-interface FeedbackData {
-  id: string;
-  feedback: string;
-  category: string;
-  confidence: number;
-  timestamp: string;
-}
+import { FeedbackData } from './InsightsDashboard';
 
 interface FeedbackHistoryProps {
   feedbackData: FeedbackData[];
@@ -50,7 +43,7 @@ const FeedbackHistory: React.FC<FeedbackHistoryProps> = ({ feedbackData }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
+    <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-100">
       <div className="flex items-center space-x-3 mb-6">
         <History className="w-6 h-6 text-blue-600" />
         <h2 className="text-2xl font-bold text-gray-800">Feedback History</h2>
@@ -59,7 +52,7 @@ const FeedbackHistory: React.FC<FeedbackHistoryProps> = ({ feedbackData }) => {
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="flex-1">
           <div className="relative">
-            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
             <input
               type="text"
               placeholder="Search feedback..."
@@ -75,7 +68,7 @@ const FeedbackHistory: React.FC<FeedbackHistoryProps> = ({ feedbackData }) => {
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
           >
             <option value="All">All Categories</option>
             <option value="Service">Service</option>
@@ -111,7 +104,7 @@ const FeedbackHistory: React.FC<FeedbackHistoryProps> = ({ feedbackData }) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <span className="text-sm text-gray-600">Confidence:</span>
-                  <div className="w-16 bg-gray-200 rounded-full h-2">
+                  <div className="w-20 bg-gray-200 rounded-full h-2">
                     <div 
                       className="bg-blue-600 h-2 rounded-full"
                       style={{ width: `${item.confidence}%` }}
